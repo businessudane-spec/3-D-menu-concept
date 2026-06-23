@@ -553,8 +553,11 @@ header {
 
     header {
         padding: 12px 16px;
-        flex-wrap: wrap;
-        gap: 10px;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0;
     }
 
     .logo h1 {
@@ -562,23 +565,7 @@ header {
     }
 
     .categories {
-        order: 3;
-        width: 100%;
-        justify-content: flex-start;
-        overflow-x: auto;
-        white-space: nowrap;
-        scrollbar-width: none;
-        border-radius: 30px;
-    }
-
-    .categories::-webkit-scrollbar {
-        display: none;
-    }
-
-    .category-btn {
-        padding: 8px 16px;
-        font-size: 13px;
-        display: inline-block;
+        display: none; /* Hide categories on small screens to save space */
     }
 
     .cart-icon-btn {
@@ -587,90 +574,111 @@ header {
     }
 
     .main-container {
-        grid-template-columns: 1fr;
-        height: calc(100vh - 120px);
-        padding: 0 16px 16px 16px;
-        gap: 12px;
-        display: flex;
-        flex-direction: column;
+        position: relative;
+        height: calc(100vh - 60px);
+        padding: 0;
+        margin: 0;
+        display: block;
         overflow: hidden;
     }
 
+    /* Full-screen 3D Viewport in background */
     .canvas-container {
-        height: 38vh;
-        flex-shrink: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
     }
 
+    /* Floating card at top */
     .info-panel {
-        flex: 1;
-        justify-content: flex-start;
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        right: 16px;
+        z-index: 5;
+        pointer-events: none;
     }
 
     .glass-card {
-        padding: 16px;
-        border-radius: 18px;
+        padding: 14px 18px;
+        border-radius: 20px;
+        background: rgba(10, 8, 15, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        pointer-events: auto;
     }
 
     .dish-details {
-        gap: 8px;
+        gap: 6px;
     }
 
     .dish-title {
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .dish-desc {
-        font-size: 13px;
-        line-height: 1.4;
+        font-size: 12px;
+        line-height: 1.3;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        margin-bottom: 2px;
     }
 
     .stats-grid {
-        margin-top: 4px;
+        display: flex;
+        justify-content: space-between;
         gap: 8px;
+        margin-top: 4px;
     }
 
     .stat-item {
-        padding: 6px;
+        flex: 1;
+        padding: 4px;
         border-radius: 8px;
+        background: rgba(255, 255, 255, 0.02);
     }
 
     .stat-val {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .stat-lbl {
-        font-size: 9px;
-        margin-top: 2px;
+        font-size: 8px;
+        margin-top: 0;
     }
 
     .price-container {
-        margin-top: 10px;
+        margin-top: 8px;
     }
 
     .price {
-        font-size: 22px;
+        font-size: 20px;
     }
 
     .price::before {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .add-btn {
-        padding: 10px 20px;
-        font-size: 13px;
-        border-radius: 12px;
+        padding: 8px 16px;
+        font-size: 12px;
+        border-radius: 10px;
     }
 
-    /* Horizontal carousel list at bottom */
+    /* Floating horizontal list at bottom */
     .items-panel {
-        order: 4;
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+        width: auto;
+        z-index: 5;
         flex-direction: row;
-        width: 100%;
-        height: 90px;
+        height: 75px;
         overflow-x: auto;
         overflow-y: hidden;
         white-space: nowrap;
@@ -684,7 +692,7 @@ header {
 
     .items-panel::-webkit-scrollbar {
         display: block;
-        height: 4px;
+        height: 3px;
     }
 
     .items-panel::-webkit-scrollbar-track {
@@ -699,29 +707,30 @@ header {
 
     .menu-card {
         flex-shrink: 0;
-        width: 160px;
-        padding: 10px;
-        gap: 10px;
-        border-radius: 14px;
+        width: 140px;
+        padding: 8px;
+        gap: 8px;
+        border-radius: 12px;
         align-items: center;
+        background: rgba(10, 8, 15, 0.7);
     }
 
     .menu-card-img-placeholder {
-        width: 44px;
-        height: 44px;
-        font-size: 20px;
-        border-radius: 10px;
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        border-radius: 8px;
     }
 
     .menu-card-title {
-        font-size: 12px;
+        font-size: 11px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
     .menu-card-price {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .cart-panel {
@@ -731,8 +740,8 @@ header {
     }
 
     .instructions {
-        bottom: 10px;
-        font-size: 10px;
-        padding: 6px 12px;
+        bottom: 105px; /* Float above bottom carousel */
+        font-size: 9px;
+        padding: 4px 10px;
     }
 }
