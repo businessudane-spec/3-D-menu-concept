@@ -291,6 +291,12 @@ function setupThree() {
     // Camera
     camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
     
+    // Renderer (Initialize early so updateCameraScale can access it)
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
     // Function to handle layout scaling based on aspect ratio
     window.updateCameraScale = function() {
         const aspect = container.clientWidth / container.clientHeight;
@@ -306,18 +312,13 @@ function setupThree() {
         
         camera.lookAt(0, -0.25, 0);
         camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
+        if (renderer) {
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
     };
 
     // Run once at start
     window.updateCameraScale();
-
-    // Renderer
-    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     // Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
