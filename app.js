@@ -290,8 +290,27 @@ function setupThree() {
     
     // Camera
     camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-    camera.position.set(0, 0.7, 4.2);
-    camera.lookAt(0, -0.25, 0);
+    
+    // Function to handle layout scaling based on aspect ratio
+    window.updateCameraScale = function() {
+        const aspect = container.clientWidth / container.clientHeight;
+        camera.aspect = aspect;
+        
+        if (aspect < 1) {
+            // Mobile (portrait): Move camera further back to avoid clipping
+            camera.position.set(0, 0.6, 5.8);
+        } else {
+            // Desktop (landscape)
+            camera.position.set(0, 0.7, 4.2);
+        }
+        
+        camera.lookAt(0, -0.25, 0);
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    };
+
+    // Run once at start
+    window.updateCameraScale();
 
     // Renderer
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
@@ -378,11 +397,7 @@ function setupThree() {
     }, { passive: false });
 
     // Handle Resize
-    window.addEventListener("resize", () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-    });
+    window.addEventListener("resize", window.updateCameraScale);
 }
 
 // 3. Create Custom Procedural 3D Food Models
