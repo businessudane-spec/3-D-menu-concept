@@ -592,10 +592,10 @@ header {
         z-index: 1;
     }
 
-    /* Floating card at top */
+    /* Floating card at bottom */
     .info-panel {
         position: absolute;
-        top: 16px;
+        bottom: 16px;
         left: 16px;
         right: 16px;
         z-index: 5;
@@ -669,10 +669,10 @@ header {
         border-radius: 10px;
     }
 
-    /* Floating horizontal list at bottom */
+    /* Floating horizontal list at top */
     .items-panel {
         position: absolute;
-        bottom: 16px;
+        top: 16px;
         left: 16px;
         right: 16px;
         width: auto;
@@ -740,7 +740,7 @@ header {
     }
 
     .instructions {
-        bottom: 105px; /* Float above bottom carousel */
+        bottom: 230px; /* Float above bottom details card */
         font-size: 9px;
         padding: 4px 10px;
     }
