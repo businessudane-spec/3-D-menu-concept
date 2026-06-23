@@ -319,7 +319,7 @@ function setupThree() {
     pointLight2.position.set(3, -1, 2);
     scene.add(pointLight2);
 
-    // Event Listeners for canvas drag
+    // Event Listeners for canvas drag (Mouse)
     canvas.addEventListener("mousedown", (e) => {
         isDragging = true;
         previousMousePosition = { x: e.clientX, y: e.clientY };
@@ -345,6 +345,37 @@ function setupThree() {
 
         previousMousePosition = { x: e.clientX, y: e.clientY };
     });
+
+    // Event Listeners for canvas drag (Touch for mobile)
+    canvas.addEventListener("touchstart", (e) => {
+        if (e.touches.length === 1) {
+            isDragging = true;
+            previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+    }, { passive: true });
+
+    window.addEventListener("touchend", () => {
+        isDragging = false;
+    });
+
+    canvas.addEventListener("touchmove", (e) => {
+        if (!isDragging || e.touches.length !== 1) return;
+
+        const deltaMove = {
+            x: e.touches[0].clientX - previousMousePosition.x,
+            y: e.touches[0].clientY - previousMousePosition.y
+        };
+
+        targetRotationY += deltaMove.x * 0.008; // slightly faster for touch
+        targetRotationX += deltaMove.y * 0.008;
+
+        targetRotationX = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, targetRotationX));
+
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        
+        // Prevent default scrolling only when interacting with 3D canvas
+        if (e.cancelable) e.preventDefault();
+    }, { passive: false });
 
     // Handle Resize
     window.addEventListener("resize", () => {
